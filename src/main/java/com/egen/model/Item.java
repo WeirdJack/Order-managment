@@ -1,14 +1,23 @@
 package com.egen.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.UUID;
 
+@Entity
 public class Item {
 
+	@Id
+	@Column(columnDefinition = "VARCHAR(36)")
 	private String itemId;
 	private String itemName;
 	private int itemQty;
-	
-	
+
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
+	}
+
 	@Override
 	public String toString() {
 		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", itemQty=" + itemQty + "]";

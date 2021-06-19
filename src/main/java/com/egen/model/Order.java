@@ -1,20 +1,42 @@
 package com.egen.model;
 
+import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import com.egen.OrderStatus;
+@Entity
+@NamedQueries({
+		@NamedQuery(name = "Order.findAll", query = "SELECT order FROM Order order JOIN fetch order.shippingAddress JOIN FETCH order.itemsList"),
+		@NamedQuery(name = "Order.findById", query = "SELECT *  from Order where orderId = :orderId"),
+		@NamedQuery(name = "Order.findWithinInterval", query = "SELECT order FROM Order order JOIN fetch order.shippingAddress JOIN fetch order.itemsList WHERE order.createdAt > :startTime AND order.createdAt < :endTime"),
+		@NamedQuery(name = "Order.findTop10OrdersWithHighestDollarAmountInZip", query = "")
 
+})
 public class Order {
-	
+
+	@Id
+	@Column(columnDefinition = "VARCHAR(36)")
     private String orderId;
     private OrderStatus orderStatus;
     private String custId;
     private double subTotal;
     private double tax;
+	private ZonedDateTime createdAt;
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
 	private double shippingCharges;
-	private Address shippingAddress;
 	private double total;
+
+	@OneToOne(cascade= CascadeType.ALL)
+	@JoinColumn(name = "orderId")
+	private Address shippingAddress;
+
+	@OneToMany(cascade= CascadeType.ALL)
+	@JoinColumn(name = "orderId")
 	private List<Item> itemsList;
 
 	public Order(String id) {
@@ -35,6 +57,10 @@ public class Order {
 		this.shippingAddress = shippingAddress;
 		this.total = total;
         this.itemsList = itemsList;
+	}
+
+	public Order() {
+
 	}
 
 

@@ -1,9 +1,15 @@
 package com.egen.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.UUID;
 
+@Entity
 public class Address {
-	
+
+	@Id
+	@Column(columnDefinition = "VARCHAR(36)")
 	private String addressId;
 	private String addressLine1;
     private String addressLine2;
@@ -36,8 +42,11 @@ public class Address {
 		this.zipCode = zipCode;
 	}
 
+	public void setAddressId(String addressId) {
+		this.addressId = addressId;
+	}
 
-    public String getAddressId() {
+	public String getAddressId() {
 		return addressId;
 	}
 	

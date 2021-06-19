@@ -1,4 +1,4 @@
-package com.egen;
+package com.egen.model;
 
 public enum OrderStatus {
 

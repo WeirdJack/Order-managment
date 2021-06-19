@@ -1,10 +1,14 @@
 package com.egen.model;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class Payment {
 
+	@Id
+	@Column(columnDefinition = "VARCHAR(36)")
 	private String paymentId;
 	private String paymentMethod;
     private ZonedDateTime paymentDate;
